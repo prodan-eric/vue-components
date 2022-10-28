@@ -6,7 +6,9 @@ import RenderButtonConfig from './components/render-button/RenderButtonConfig.vu
 import { ref } from 'vue'
 import SliderConfig from './components/slider/SliderConfig.vue'
 const selectedComponent = ref('')
-const selectComponent = (event: MouseEvent) => selectedComponent.value = (event.target! as HTMLElement).innerHTML;
+const selectComponent = (event: MouseEvent) => selectedComponent.value===(event.target! as HTMLElement).innerHTML?
+                                               selectedComponent.value='' : 
+                                               selectedComponent.value=(event.target! as HTMLElement).innerHTML
 
 </script>
 
