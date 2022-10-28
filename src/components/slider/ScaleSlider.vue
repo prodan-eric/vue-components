@@ -11,9 +11,7 @@ const rightBar = ref(null)
 
 const selectedValue = ref()
 
-const updateBar = (event: Event) =>{
-  console.log(sliderWidth);
-  
+const updateBar = (event: Event) =>{  
   const newValue = (Number((event.target as HTMLInputElement).value))*5;
   const unselectedRange = sliderWidth-(sliderWidth-newValue);
   (leftBar.value! as HTMLElement).style.width = `${unselectedRange}px`;
