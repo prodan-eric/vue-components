@@ -27,8 +27,7 @@ const sliderWidth = computed(()=>{
 })
 
 const computedProps = computed(()=>{
-  return props.min+ props.max+ props.step+ props.pickerWidth+ 
-         props.leftBarColor+ props.rightBarColor+ props.pickerColor
+  return props.min+props.max+props.step+props.pickerWidth+props.leftBarColor+props.rightBarColor+props.pickerColor
 })
 
 const leftBar = ref(null)
