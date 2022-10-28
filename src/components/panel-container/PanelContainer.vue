@@ -79,6 +79,10 @@ watch(width, () => {
   justify-content: space-evenly;
 }
 
+.config{
+  margin-left: 50px;
+}
+
 .side {
   background-color: black;
   width: 4px;

@@ -17,6 +17,14 @@
     margin-right: 50px;
  }
 
+ .component-option{
+   outline: solid gray;
+   outline-width: 1px;
+   border-radius: 5px;
+   margin-bottom: 10px;
+   padding: 5px;
+ }
+
  .component-option:hover{
     background-color: lightblue;
     cursor: pointer;

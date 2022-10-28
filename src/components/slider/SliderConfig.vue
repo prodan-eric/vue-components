@@ -5,7 +5,7 @@ import ScaleSlider from './ScaleSlider.vue';
  const min = ref();
  const max = ref();
  const pickerWidth = ref();
- const leftBarColor = ref('darkgreen');
+ const leftBarColor = ref('black');
  const rightBarColor = ref('gray');
  const pickerColor = ref('lightblue');
  const step = ref();
