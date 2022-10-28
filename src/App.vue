@@ -5,7 +5,7 @@ import PanelContainerConfig from './components/panel-container/PanelContainerCon
 import RenderButtonConfig from './components/render-button/RenderButtonConfig.vue'
 import ScaleSlider from './components/slider/ScaleSlider.vue'
 import { ref } from 'vue'
-const selectedComponent = ref('')
+const selectedComponent = ref('Slider')
 const selectComponent = (event: MouseEvent) => selectedComponent.value = (event.target! as HTMLElement).innerHTML;
 
 </script>

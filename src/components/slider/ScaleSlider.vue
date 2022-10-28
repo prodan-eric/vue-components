@@ -1,36 +1,48 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import {getWidthPercentage} from './functions'
-import {SLIDER_WIDTH, PICKER_WIDTH} from './constants'
+import {sliderWidth, pickerWidth, leftBarColor, rightBarColor, pickerColor, step, min, max} from './config'
+
 
 const leftBar = ref(null)
 const slider = ref(null)
 const picker = ref(null)
-const displayValue = ref(null)
+const valueDisplay = ref(null)
+const rightBar = ref(null)
 
 const selectedValue = ref()
 
+const updateBar = (event: Event) =>{
+  console.log(sliderWidth);
+  
+  const newValue = (Number((event.target as HTMLInputElement).value))*5;
+  const unselectedRange = sliderWidth-(sliderWidth-newValue);
+  (leftBar.value! as HTMLElement).style.width = `${unselectedRange}px`;
+}
+
 onMounted(()=>{
-  (slider.value! as HTMLElement).style.width = `${SLIDER_WIDTH}px`;
-  (leftBar.value! as HTMLElement).style.width = `${SLIDER_WIDTH/2}px`;  
-  (picker.value! as HTMLElement).style.width = `${PICKER_WIDTH}px`;
-  selectedValue.value = getWidthPercentage((leftBar.value! as HTMLElement).offsetWidth);
-  (displayValue.value! as HTMLElement).style.marginLeft = `${PICKER_WIDTH*1.5}px`;
+  (slider.value! as HTMLElement).style.width = `${sliderWidth}px`;
+  (leftBar.value! as HTMLElement).style.width = `${sliderWidth/2}px`;
+  (picker.value! as HTMLElement).style.width = `${pickerWidth}px`;
+  (valueDisplay.value! as HTMLElement).style.marginLeft = `${pickerWidth}px`;
+  (leftBar.value! as HTMLElement).style.backgroundColor = leftBarColor;
+  (rightBar.value! as HTMLElement).style.backgroundColor = rightBarColor;
+  (picker.value! as HTMLElement).style.backgroundColor = pickerColor;
+  selectedValue.value = (leftBar.value! as HTMLElement).offsetWidth/5;
 })
 
 const startSliding = () =>{
   window.addEventListener('mousemove', resize)
-  window.addEventListener('mouseup', stopResizing)
+  window.addEventListener('mouseup', stopSliding)
 }
 const resize = (event: MouseEvent) =>{
-  const selectionWidth = event.clientX-(leftBar.value! as HTMLElement).offsetLeft;
-  (leftBar.value! as HTMLElement).style.width = `${selectionWidth}px`
-  const widthPercentage = getWidthPercentage(selectionWidth)
-  if(widthPercentage)selectedValue.value = widthPercentage
+    const selectionWidth = event.clientX-(leftBar.value! as HTMLElement).offsetLeft;
+    const newValue = (Math.round(selectionWidth/5)+min);
+    if(newValue>=min&&newValue<=max)selectedValue.value = newValue;
+    (leftBar.value! as HTMLElement).style.width = `${selectionWidth}px`;
 }
-const stopResizing = () =>{
+const stopSliding = () =>{
     window.removeEventListener('mousemove', resize)
-    window.removeEventListener('mouseup', stopResizing)
+    window.removeEventListener('mouseup', stopSliding)
 }
 
 </script>
@@ -42,13 +54,27 @@ const stopResizing = () =>{
          <span @mousedown="startSliding" class="picker" ref="picker"></span>
         <div class="right-bar" ref="rightBar"></div>
     </div>
-    <div class="display-value" ref="displayValue"><p>{{selectedValue}}%</p></div>
+    <div class="display-value" ref="valueDisplay">
+      <input type="number" class="percentage-input" 
+             @input="updateBar" 
+             :value="selectedValue"
+             :min="min"
+             :max="max"/>
+    </div>
   </div>
 </template>
 
 <style scoped>
 
+.percentage-input{
+  margin-top: 20px;
+  width: 45px;
+  border-radius: 5px;
+}
+
 .display-value{
+  display: grid;
+  justify-content: center;
   margin-left: 0;
 }
 
@@ -83,7 +109,6 @@ const stopResizing = () =>{
 }
 
 .picker:hover{
-  background-color: rgb(89, 133, 217);
   cursor: pointer;
 }
 
