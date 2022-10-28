@@ -3,8 +3,8 @@ import SideBar from './components/SideBar.vue'
 import DatePickerConfig from './components/date-picker/DatePickerConfig.vue'
 import PanelContainerConfig from './components/panel-container/PanelContainerConfig..vue'
 import RenderButtonConfig from './components/render-button/RenderButtonConfig.vue'
-import ScaleSlider from './components/slider/ScaleSlider.vue'
 import { ref } from 'vue'
+import SliderConfig from './components/slider/SliderConfig.vue'
 const selectedComponent = ref('Slider')
 const selectComponent = (event: MouseEvent) => selectedComponent.value = (event.target! as HTMLElement).innerHTML;
 
@@ -18,7 +18,7 @@ const selectComponent = (event: MouseEvent) => selectedComponent.value = (event.
         <DatePickerConfig v-if="selectedComponent==='Date Picker'"/>
         <PanelContainerConfig v-if="selectedComponent==='Panel Container'"/>
         <RenderButtonConfig v-if="selectedComponent==='Render Button'"/>
-        <ScaleSlider v-if="selectedComponent==='Slider'"/>
+        <SliderConfig v-if="selectedComponent==='Slider'"/>
     </div>
 </template>
 

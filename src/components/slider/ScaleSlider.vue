@@ -1,7 +1,35 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
-import {sliderWidth, pickerWidth, leftBarColor, rightBarColor, pickerColor, VAL_PX_RATIO, min, max} from './config'
+import { computed } from '@vue/reactivity'
+import { onMounted, ref, watch } from 'vue'
+const VAL_PX_RATIO = 5
 
+
+const props = withDefaults(defineProps<{
+  pickerWidth: number
+  leftBarColor: string
+  rightBarColor: string
+  pickerColor: string
+  min: number
+  max: number
+  step: number}>(),{
+
+  min: -10,
+  max: 100,
+  step: 1,
+  pickerWidth: 20,
+  leftBarColor: 'black',
+  rightBarColor: 'gray',
+  pickerColor: 'lightblue',
+})
+
+const sliderWidth = computed(()=>{
+  return (props.max-props.min)*VAL_PX_RATIO
+})
+
+const computedProps = computed(()=>{
+  return props.min+ props.max+ props.step+ props.pickerWidth+ 
+         props.leftBarColor+ props.rightBarColor+ props.pickerColor
+})
 
 const leftBar = ref(null)
 const slider = ref(null)
@@ -9,29 +37,33 @@ const picker = ref(null)
 const valueDisplay = ref(null)
 const rightBar = ref(null)
 
-const selectedValue = ref()
+const selectedValue = ref((props.max!-props.min!)*props.step!/2)
 
 const updateBar = (event: Event) =>{  
-  const newValue = Number((event.target as HTMLInputElement).value)-min;
-  if  (newValue<min){
+  const newValue = (Number((event.target as HTMLInputElement).value)-props.min!)/props.step!;
+  if  (newValue<props.min!*props.step!){
     (leftBar.value! as HTMLElement).style.width = `${0}px`
-  } else if (newValue>max){
-    (leftBar.value! as HTMLElement).style.width = `${(max-min)*VAL_PX_RATIO}px`
+  } else if (newValue>props.max!*props.step!){
+    (leftBar.value! as HTMLElement).style.width = `${(props.max!-props.min!)*VAL_PX_RATIO!}px`
   } else {
-    (leftBar.value! as HTMLElement).style.width = `${newValue*VAL_PX_RATIO}px`;
+    (leftBar.value! as HTMLElement).style.width = `${newValue*VAL_PX_RATIO!}px`;
   }
 }
 
-onMounted(()=>{
-  selectedValue.value = (max+min)/2;
-  (slider.value! as HTMLElement).style.width = `${sliderWidth}px`;
-  (picker.value! as HTMLElement).style.width = `${pickerWidth}px`;
-  (valueDisplay.value! as HTMLElement).style.marginLeft = `${pickerWidth}px`;
-  (leftBar.value! as HTMLElement).style.backgroundColor = leftBarColor;
-  (rightBar.value! as HTMLElement).style.backgroundColor = rightBarColor;
-  (picker.value! as HTMLElement).style.backgroundColor = pickerColor;
-  (leftBar.value! as HTMLElement).style.width = `${(selectedValue.value-min)*VAL_PX_RATIO}px`;
-})
+const setSliderStyle = () =>{
+  selectedValue.value = (props.max-props.min)*props.step/2;
+  (slider.value! as HTMLElement).style.width = `${sliderWidth.value}px`;
+  (picker.value! as HTMLElement).style.width = `${props.pickerWidth}px`;
+  (valueDisplay.value! as HTMLElement).style.marginLeft = `${props.pickerWidth}px`;
+  (leftBar.value! as HTMLElement).style.backgroundColor = (props.leftBarColor as string);
+  (rightBar.value! as HTMLElement).style.backgroundColor = (props.rightBarColor as string);
+  (picker.value! as HTMLElement).style.backgroundColor = (props.pickerColor as string);
+  (leftBar.value! as HTMLElement).style.width = `${((selectedValue.value)*VAL_PX_RATIO!)/props.step!}px`;
+}
+
+watch(computedProps,()=>setSliderStyle())
+onMounted(()=>setSliderStyle())
+
 
 const startSliding = () =>{
   window.addEventListener('mousemove', resize)
@@ -39,8 +71,8 @@ const startSliding = () =>{
 }
 const resize = (event: MouseEvent) =>{
     const selectionWidth = event.clientX-(leftBar.value! as HTMLElement).offsetLeft;
-    const newValue = (Math.round(selectionWidth/VAL_PX_RATIO)+min);
-    if(newValue>=min&&newValue<=max)selectedValue.value = newValue;
+    const newValue = (Math.round(selectionWidth/VAL_PX_RATIO!)+props.min!);
+    if(newValue>=props.min!&&newValue<=props.max!)selectedValue.value = newValue*props.step!;
     (leftBar.value! as HTMLElement).style.width = `${selectionWidth}px`;
 }
 const stopSliding = () =>{
@@ -61,8 +93,8 @@ const stopSliding = () =>{
       <input type="number" class="percentage-input" 
              @input="updateBar" 
              :value="selectedValue"
-             :min="min"
-             :max="max"/>
+             :min="props.min!*props.step!"
+             :max="props.max!*props.step!"/>
     </div>
   </div>
 </template>
@@ -71,7 +103,8 @@ const stopSliding = () =>{
 
 .percentage-input{
   margin-top: 20px;
-  width: 45px;
+  width: 60px;
+  height: 20px;
   border-radius: 5px;
 }
 
