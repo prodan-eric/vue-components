@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import {sliderWidth, pickerWidth, leftBarColor, rightBarColor, pickerColor, step, min, max} from './config'
+import {sliderWidth, pickerWidth, leftBarColor, rightBarColor, pickerColor, VAL_PX_RATIO, min, max} from './config'
 
 
 const leftBar = ref(null)
@@ -12,20 +12,25 @@ const rightBar = ref(null)
 const selectedValue = ref()
 
 const updateBar = (event: Event) =>{  
-  const newValue = (Number((event.target as HTMLInputElement).value))*5;
-  const unselectedRange = sliderWidth-(sliderWidth-newValue);
-  (leftBar.value! as HTMLElement).style.width = `${unselectedRange}px`;
+  const newValue = Number((event.target as HTMLInputElement).value)-min;
+  if  (newValue<min){
+    (leftBar.value! as HTMLElement).style.width = `${0}px`
+  } else if (newValue>max){
+    (leftBar.value! as HTMLElement).style.width = `${(max-min)*VAL_PX_RATIO}px`
+  } else {
+    (leftBar.value! as HTMLElement).style.width = `${newValue*VAL_PX_RATIO}px`;
+  }
 }
 
 onMounted(()=>{
+  selectedValue.value = (max+min)/2;
   (slider.value! as HTMLElement).style.width = `${sliderWidth}px`;
-  (leftBar.value! as HTMLElement).style.width = `${sliderWidth/2}px`;
   (picker.value! as HTMLElement).style.width = `${pickerWidth}px`;
   (valueDisplay.value! as HTMLElement).style.marginLeft = `${pickerWidth}px`;
   (leftBar.value! as HTMLElement).style.backgroundColor = leftBarColor;
   (rightBar.value! as HTMLElement).style.backgroundColor = rightBarColor;
   (picker.value! as HTMLElement).style.backgroundColor = pickerColor;
-  selectedValue.value = (leftBar.value! as HTMLElement).offsetWidth/5;
+  (leftBar.value! as HTMLElement).style.width = `${(selectedValue.value-min)*VAL_PX_RATIO}px`;
 })
 
 const startSliding = () =>{
@@ -34,7 +39,7 @@ const startSliding = () =>{
 }
 const resize = (event: MouseEvent) =>{
     const selectionWidth = event.clientX-(leftBar.value! as HTMLElement).offsetLeft;
-    const newValue = (Math.round(selectionWidth/5)+min);
+    const newValue = (Math.round(selectionWidth/VAL_PX_RATIO)+min);
     if(newValue>=min&&newValue<=max)selectedValue.value = newValue;
     (leftBar.value! as HTMLElement).style.width = `${selectionWidth}px`;
 }
