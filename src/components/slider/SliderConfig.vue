@@ -5,7 +5,7 @@ import ScaleSlider from './ScaleSlider.vue';
  const min = ref();
  const max = ref();
  const pickerWidth = ref();
- const leftBarColor = ref('black');
+ const leftBarColor = ref('darkgreen');
  const rightBarColor = ref('gray');
  const pickerColor = ref('lightblue');
  const step = ref();
@@ -24,12 +24,12 @@ import ScaleSlider from './ScaleSlider.vue';
     />
 
     <div class="slider-config">
-        <input placeholder="Min" type="number" v-model="min">
-        <input placeholder="Max" type="number" v-model="max">
-        <input placeholder="Step" type="number" v-model="step">
+        <input placeholder="Min"          type="number" v-model="min">
+        <input placeholder="Max"          type="number" v-model="max">
+        <input placeholder="Step"         type="number" v-model="step">
         <input placeholder="Picker Width" type="number" v-model="pickerWidth">
-        <input placeholder="Left Color" type="text" v-model="leftBarColor">
-        <input placeholder="Right Color" type="text" v-model="rightBarColor">
+        <input placeholder="Left Color"   type="text"   v-model="leftBarColor">
+        <input placeholder="Right Color"  type="text"   v-model="rightBarColor">
     </div>
     </div>
 </template>
@@ -43,5 +43,11 @@ import ScaleSlider from './ScaleSlider.vue';
 .slider-wrapper{
     display: flex;
     justify-content: space-evenly;
+}
+
+.slider-config input{
+    margin-bottom: 5px;
+    border-radius: 5px;
+    width: 120px;
 }
 </style>
