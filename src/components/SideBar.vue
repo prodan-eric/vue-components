@@ -3,7 +3,7 @@
 
 <template>
     <div class="component-options">
-      <div class="component-option" @click="$emit('component-click',$event)">Date Picker</div>
+      <div class="component-option" @click="$emit('component-click', $event)" >Date Picker</div>
       <div class="component-option" @click="$emit('component-click', $event)" >Panel Container</div>
       <div class="component-option" @click="$emit('component-click', $event)" >Render Button</div>
       <div class="component-option" @click="$emit('component-click', $event)" >Slider</div>
