@@ -58,7 +58,7 @@ function selectPath(date: Date) {
   if (moment(date).isSameOrAfter(selectedDates.value.from))
     selectedDates.value.to = date;
   if (moment(date).isSame(dates2.value[dates2.value.length - 1]))
-    timer = setTimeout(() => {
+    timer = window.setTimeout(() => {
       goForward();
     }, 700);
 }
