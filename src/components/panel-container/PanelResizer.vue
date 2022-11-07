@@ -14,8 +14,8 @@ const startResizing = () => {
    window.addEventListener('mouseup', stopResizing)
 }
 const resize = (event: MouseEvent) => {
-  const {y} = container.getBoundingClientRect();
-  const height = event.clientY-y;
+  const {y} = container.getBoundingClientRect()
+  const height = event.clientY-y
   
   if(height>CONTAINER_MIN_HEIGHT&&height<CONTAINER_MAX_HEIGHT) container.style.height = `${height}px`
 }
