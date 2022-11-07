@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from '@vue/reactivity'
-import { onMounted, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 const VAL_PX_RATIO = 5
 
 const props = withDefaults(defineProps<{
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{
   pickerColor: 'lightblue',
 })
 
-const halfSlider = (props.max+props.min)*props.step/2;
+const halfSlider = (props.max+props.min)*props.step/2
 
 const selectedValue = ref((props.max+props.min)*props.step!/2)
 
