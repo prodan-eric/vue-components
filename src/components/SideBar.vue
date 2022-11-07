@@ -3,10 +3,10 @@
 
 <template>
     <div class="component-options">
-      <div class="component-option" @click="$emit('component-click', $event)" >Date Picker</div>
-      <div class="component-option" @click="$emit('component-click', $event)" >Panel Container</div>
-      <div class="component-option" @click="$emit('component-click', $event)" >Render Button</div>
-      <div class="component-option" @click="$emit('component-click', $event)" >Slider</div>
+      <router-link class="component-option" to="/slider">Slider</router-link>
+      <router-link class="component-option" to="/date-picker">Date Picker</router-link>
+      <router-link class="component-option" to="/panel-container">Panel Container</router-link>
+      <router-link class="component-option" to="/render-button">Render Button</router-link>
     </div>
 </template>
 
@@ -23,11 +23,17 @@
    border-radius: 5px;
    margin-bottom: 10px;
    padding: 5px;
+   text-decoration: none;
+   color: black;
  }
 
  .component-option:hover{
     background-color: lightblue;
     cursor: pointer;
+ }
+
+ .component-option:active{
+  color: blue;
  }
 </style>
 

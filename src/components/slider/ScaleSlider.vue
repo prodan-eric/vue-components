@@ -4,10 +4,10 @@ import { ref, watch } from 'vue'
 const VAL_PX_RATIO = 5
 
 const props = withDefaults(defineProps<{
-  pickerWidth: number
   leftBarColor: string
   rightBarColor: string
   pickerColor: string
+  pickerWidth: number
   min: number
   max: number
   step: number}>(),{
