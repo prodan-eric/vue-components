@@ -7,8 +7,7 @@ import PanelContainer from './components/panel-container/PanelContainerConfig.vu
 import {createRouter, createWebHashHistory} from 'vue-router'
 
 
-const routes = [
-  { path: '/', component: App },
+const routes = [  
   { path: '/slider', component: Slider },
   { path: '/panel-container', component: PanelContainer},
   { path: '/render-button', component: RenderButton},
