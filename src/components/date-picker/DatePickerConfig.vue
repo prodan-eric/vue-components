@@ -3,6 +3,7 @@ import DatePickerOptions from "./options/DatePicker.vue";
 import DatePickerComposition from "./composition/DatePicker.vue";
 import {changeTheme} from './dateFunctions'
 import { ref } from "vue";
+import SliderCheckbox from "./SliderCheckbox.vue";
 
 const showTime = ref(true);
 const showDateSideBar = ref(false);
@@ -11,24 +12,12 @@ const showDateSideBar = ref(false);
 <template>
 <div class="date-picker">
     <div class="switcher">
-    <p>Light&nbsp;</p> 
-    <label class="switch">
-      <input type="checkbox" @input="(event) => changeTheme(event as InputEvent)"/>
-      <span class="slider round"></span> 
-     </label>
-    <p>&nbsp;Dark</p>
+      <SliderCheckbox :text="'Light'" @check="(e: InputEvent)=>changeTheme(e)">
+      <p>&nbsp;Dark</p>
+      </SliderCheckbox>
 
-    <p>&nbsp;&nbsp;Show Time&nbsp;</p> 
-    <label class="switch">
-      <input type="checkbox" checked @input="()=>showTime=!showTime"/>
-      <span class="slider round"></span> 
-     </label>
-
-     <p>&nbsp;&nbsp;Show Side Bar&nbsp;</p> 
-     <label class="switch">
-      <input type="checkbox" @input="()=>showDateSideBar=!showDateSideBar"/>
-      <span class="slider round"></span> 
-     </label>
+      <SliderCheckbox :text="'Show Time'" @check="showTime=!showTime"/>
+      <SliderCheckbox :text="'Show SideBar'" @check="showDateSideBar=!showDateSideBar"/>
   </div>
 
   <p class="api">Options API:</p>

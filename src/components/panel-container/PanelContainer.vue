@@ -15,7 +15,6 @@ watch(width, () => {
     document.documentElement.style.setProperty('--innerWidth', `${width.value}px`) :
     document.documentElement.style.setProperty('--innerWidth', `${standardWidth}px`)
 })
-
 </script>
 
 <template>
@@ -37,7 +36,7 @@ watch(width, () => {
             suscipit delectus voluptas voluptatem fuga velit porro, esse debitis doloremque
             totam qui obcaecati numquam ipsam est sit iusto quidem dolor tempore at, eveniet, perferendis
             officia? Exercitationem doloribus adipisci nemo nam?
-            <PanelResizer />
+            <PanelResizer/>
           </template>
         </InnerContainer>
 

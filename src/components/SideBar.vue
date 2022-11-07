@@ -16,6 +16,7 @@
    padding: 5px;
    text-decoration: none;
    color: black;
+   background-color: white;
  }
 
  .component-option:hover{
